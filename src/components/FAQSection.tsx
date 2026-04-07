@@ -55,7 +55,7 @@ const FAQItem = ({ q, a, index }: { q: string; a: string; index: number }) => {
 };
 
 const FAQSection = () => {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal(true);
 
   return (
     <section className="pt-24 pb-16 relative overflow-hidden" ref={ref}>

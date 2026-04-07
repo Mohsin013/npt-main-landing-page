@@ -2,19 +2,23 @@ import { Button } from "@/components/ui/button";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { Mail, MessageCircle, Phone, ArrowRight } from "lucide-react";
 import { Suspense, lazy } from "react";
+import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 
 // Lazy load CTAScene to improve initial load time
 const CTAScene = lazy(() => import("./CTAScene"));
 
 const CTASection = () => {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal(true);
+  const { isMobile } = useDeviceDetection();
 
   return (
     <section className="py-24 relative overflow-hidden" ref={ref}>
-      {/* 3D Scene Background - Lazy loaded */}
-      <Suspense fallback={null}>
-        <CTAScene />
-      </Suspense>
+      {/* 3D Scene Background - Lazy loaded - only on desktop */}
+      {!isMobile && (
+        <Suspense fallback={null}>
+          <CTAScene />
+        </Suspense>
+      )}
 
       {/* Background glow */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">

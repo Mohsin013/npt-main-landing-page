@@ -30,7 +30,7 @@ const processSteps = [
 ];
 
 const SolutionSection = () => {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal(true);
 
   return (
     <section id="solution" className="py-24 relative overflow-hidden" ref={ref}>

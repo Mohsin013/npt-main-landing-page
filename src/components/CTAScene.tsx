@@ -216,8 +216,8 @@ const ParticleSwarm = ({ isMobile, isLowEndDevice }: { isMobile: boolean; isLowE
 const CTAScene = () => {
   const { isMobile, isLowEndDevice, prefersReducedMotion } = useDeviceDetection();
 
-  // Completely skip 3D scene if user prefers reduced motion
-  if (prefersReducedMotion) {
+  // Completely skip 3D scene on mobile or if user prefers reduced motion
+  if (isMobile || isLowEndDevice || prefersReducedMotion) {
     return null;
   }
 

@@ -29,7 +29,7 @@ const aiServices = [
 ];
 
 const AIProminence = () => {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal(true);
 
   return (
     <section className="py-24 relative overflow-hidden" ref={ref}>

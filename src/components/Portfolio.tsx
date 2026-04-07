@@ -48,7 +48,7 @@ const projects = [
 ];
 
 const Portfolio = () => {
-  const ref = useScrollReveal();
+  const ref = useScrollReveal(true);
 
   return (
     <section

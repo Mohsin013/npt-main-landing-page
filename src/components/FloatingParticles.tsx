@@ -4,13 +4,13 @@ import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 const FloatingParticles = () => {
   const { isMobile, isLowEndDevice, prefersReducedMotion } = useDeviceDetection();
 
-  // Reduce particle count significantly on mobile and low-end devices
-  const particleCount = useMemo(() => {
-    if (prefersReducedMotion) return 0;
-    if (isLowEndDevice) return 5;
-    if (isMobile) return 10;
-    return 30; // Reduced from 50
-  }, [isMobile, isLowEndDevice, prefersReducedMotion]);
+  // Disable particles completely on mobile
+  if (isMobile || isLowEndDevice || prefersReducedMotion) {
+    return null;
+  }
+
+  // Reduce particle count on desktop
+  const particleCount = 30;
 
   const particles = useMemo(() => {
     return Array.from({ length: particleCount }, (_, i) => ({
@@ -23,10 +23,6 @@ const FloatingParticles = () => {
       opacity: Math.random() * 0.3 + 0.1,
     }));
   }, [particleCount]);
-
-  if (prefersReducedMotion || particleCount === 0) {
-    return null;
-  }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
