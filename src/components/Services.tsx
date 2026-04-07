@@ -1,4 +1,4 @@
-import { Brain, Rocket, Globe, Cloud, MessageSquare, Smartphone, Palette, Zap } from "lucide-react";
+import { Brain, Rocket, Globe, Cloud, MessageSquare, Smartphone, Palette, Zap, CheckCircle2, Database } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const services = [
@@ -56,6 +56,20 @@ const services = [
     title: "UI/UX Design",
     desc: "Stunning, user-centric designs that convert visitors into customers.",
     gradient: "from-cyan-500/20 to-blue-500/20",
+    featured: false,
+  },
+  {
+    icon: CheckCircle2,
+    title: "Quality Assurance",
+    desc: "Comprehensive functional testing from end-to-end validation to granular component testing.",
+    gradient: "from-lime-500/20 to-green-500/20",
+    featured: false,
+  },
+  {
+    icon: Database,
+    title: "CMS Integration",
+    desc: "Headless CMS implementation with Umbraco and Contentful for seamless content management.",
+    gradient: "from-fuchsia-500/20 to-pink-500/20",
     featured: false,
   },
 ];

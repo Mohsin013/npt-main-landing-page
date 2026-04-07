@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { Rocket, Globe, Brain, Cloud } from "lucide-react";
+import { Rocket, Globe, Brain, Cloud, CheckCircle2, Database } from "lucide-react";
 import CTASection from "@/components/CTASection";
 
 const serviceDetails = [
@@ -26,6 +26,18 @@ const serviceDetails = [
     title: "Cloud & DevOps",
     desc: "We deploy and manage applications on AWS with best practices.",
     includes: [],
+  },
+  {
+    icon: CheckCircle2,
+    title: "Quality Assurance",
+    desc: "Comprehensive functional testing from end-to-end validation to granular component testing.",
+    includes: ["End-to-end testing", "Component testing", "Regression testing", "Test automation"],
+  },
+  {
+    icon: Database,
+    title: "CMS Integration",
+    desc: "Headless CMS implementation with Umbraco and Contentful for seamless content management.",
+    includes: ["Umbraco", "Contentful", "API integration", "Content modeling"],
   },
 ];
 
