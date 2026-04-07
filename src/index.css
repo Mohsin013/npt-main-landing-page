@@ -223,6 +223,13 @@
       opacity: 0.3;
     }
 
+    /* Ensure reveal elements are visible on mobile */
+    .reveal {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      transition: none !important;
+    }
+
     /* Disable heavy animations on mobile */
     @media (prefers-reduced-motion: reduce) {
       *,
@@ -233,6 +240,21 @@
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
       }
+    }
+  }
+
+  /* Safari-specific fixes */
+  @supports (-webkit-backdrop-filter: none) {
+    .reveal {
+      /* Force hardware acceleration for smoother animations */
+      transform: translateZ(0);
+      will-change: opacity, transform;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .reveal.visible {
+      transform: translateZ(0);
     }
   }
 }

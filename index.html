@@ -26,6 +26,35 @@
     <!-- DNS Prefetch for performance -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+
+    <!-- Critical CSS for Safari mobile - prevents blank screen -->
+    <style>
+      /* Ensure visibility even before JS loads on Safari mobile */
+      body {
+        opacity: 1 !important;
+        visibility: visible !important;
+      }
+
+      #root {
+        opacity: 1 !important;
+        visibility: visible !important;
+        min-height: 100vh;
+      }
+
+      /* Force hardware acceleration on Safari */
+      #root > * {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
+
+      /* Mobile-specific fixes */
+      @media (max-width: 768px) {
+        .reveal {
+          opacity: 1 !important;
+          transform: translateY(0) !important;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

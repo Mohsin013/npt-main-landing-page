@@ -4,11 +4,6 @@ import { useDeviceDetection } from "@/hooks/useDeviceDetection";
 const FloatingParticles = () => {
   const { isMobile, isLowEndDevice, prefersReducedMotion } = useDeviceDetection();
 
-  // Disable particles completely on mobile
-  if (isMobile || isLowEndDevice || prefersReducedMotion) {
-    return null;
-  }
-
   // Reduce particle count on desktop
   const particleCount = 30;
 
@@ -23,6 +18,11 @@ const FloatingParticles = () => {
       opacity: Math.random() * 0.3 + 0.1,
     }));
   }, [particleCount]);
+
+  // Disable particles completely on mobile
+  if (isMobile || isLowEndDevice || prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

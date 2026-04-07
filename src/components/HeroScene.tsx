@@ -1,8 +1,34 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, Component, ReactNode } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial } from "@react-three/drei";
 import * as THREE from "three";
 import { useDeviceDetection } from "@/hooks/useDeviceDetection";
+
+// Simple Error Boundary to catch 3D rendering errors
+class ErrorBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode; onError?: () => void },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback: ReactNode; onError?: () => void }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch() {
+    this.props.onError?.();
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
 
 const AnimatedSphere = ({ isMobile, isLowEndDevice }: { isMobile: boolean; isLowEndDevice: boolean }) => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -132,7 +158,7 @@ const FloatingRings = ({ isMobile, isLowEndDevice }: { isMobile: boolean; isLowE
   );
 };
 
-const HeroScene = () => {
+const HeroScene = ({ onError }: { onError?: () => void }) => {
   const { isMobile, isLowEndDevice, prefersReducedMotion } = useDeviceDetection();
 
   // Completely skip 3D scene if user prefers reduced motion
@@ -142,19 +168,21 @@ const HeroScene = () => {
 
   return (
     <div className="absolute inset-0 z-0">
-      <Canvas
-        camera={{ position: [0, 0, 7], fov: 45 }}
-        gl={{ alpha: true, antialias: !isLowEndDevice, powerPreference: isLowEndDevice ? "low-power" : "high-performance" }}
-        style={{ background: "transparent" }}
-        dpr={isMobile ? 1 : window.devicePixelRatio} // Lower pixel ratio on mobile
-      >
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} intensity={1} color="#7C3AED" />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#2563EB" />
-        <AnimatedSphere isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
-        <OrbitingParticles isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
-        <FloatingRings isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
-      </Canvas>
+      <ErrorBoundary fallback={null} onError={onError}>
+        <Canvas
+          camera={{ position: [0, 0, 7], fov: 45 }}
+          gl={{ alpha: true, antialias: !isLowEndDevice, powerPreference: isLowEndDevice ? "low-power" : "high-performance" }}
+          style={{ background: "transparent" }}
+          dpr={isMobile ? 1 : window.devicePixelRatio} // Lower pixel ratio on mobile
+        >
+          <ambientLight intensity={0.5} />
+          <pointLight position={[10, 10, 10]} intensity={1} color="#7C3AED" />
+          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#2563EB" />
+          <AnimatedSphere isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
+          <OrbitingParticles isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
+          <FloatingRings isMobile={isMobile} isLowEndDevice={isLowEndDevice} />
+        </Canvas>
+      </ErrorBoundary>
     </div>
   );
 };

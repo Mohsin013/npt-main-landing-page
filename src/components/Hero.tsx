@@ -7,6 +7,8 @@ import { Link } from "react-router-dom";
 const HeroScene = lazy(() => import("./HeroScene"));
 
 const Hero = () => {
+  const [sceneError, setSceneError] = useState(false);
+
   const roles = useMemo(
     () => [
       "4-Week MVPs",
@@ -43,10 +45,12 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20">
-      {/* 3D Scene Background - Lazy loaded */}
-      <Suspense fallback={null}>
-        <HeroScene />
-      </Suspense>
+      {/* 3D Scene Background - Lazy loaded with error handling */}
+      {!sceneError && (
+        <Suspense fallback={null}>
+          <HeroScene onError={() => setSceneError(true)} />
+        </Suspense>
+      )}
 
       {/* Grid background */}
       <div className="absolute inset-0 grid-bg opacity-30 z-[1]" />
